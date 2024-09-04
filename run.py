@@ -1,9 +1,15 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+
+#install external libraries to use google sheet API:
+#access and update data from spreadsheet
 import gspread
+#use creds.json for the autentication of the google clous
 from google.oauth2.service_account import Credentials
 
+#set the scope
+#IAM configuration list the api that the program should access
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -25,7 +31,7 @@ def get_sales_data():
 
     #values are collected as strings
     data_str = input("Enter your data here: ")
-    ##convert the string value into a list of values
+    ##convert the string value into a list of values (still strings - need to be converted into integer)
     #split methods break at the commas
     sales_data = data_str.split(",")
     #the function below is calling the validate data fucntion
@@ -35,6 +41,9 @@ def validate_data(values):
     """inside the try convert all string values in integer. raises valueerror if strings cannot be
     converted or if there are no exact 6 values"""
     try:
+        #1. conversion attempt from string to integer - provide error if it cannot be converted (es cat):
+        [int(value) for value in values]
+        #2. validation of the 6 numbers given
         if len(values) != 6:
             raise ValueError(
                 f"Exactly 6 value required, you provided {len(values)}"

@@ -31,15 +31,18 @@ def get_sales_data():
         print("the data entered should be six numbers separated by commas")
         print("example: 10,20,30,40,50,60\n")
 
-        #values are collected as strings
+        #values are collected as strings:
         data_str = input("Enter your data here: ")
         ##convert the string value into a list of values (still strings - need to be converted into integer)
         #split methods break at the commas
         sales_data = data_str.split(",")
-        #the function below is calling the validate data fucntion
+        #the function below is calling the validate data fucntion:
         if validate_data(sales_data):
             print("data is valid")
             break
+    #return data to be addded in the sheet:
+    return sales_data
+        
 
 def validate_data(values):
     """inside the try convert all string values in integer. raises valueerror if strings cannot be
@@ -47,7 +50,7 @@ def validate_data(values):
     try:
         #1. conversion attempt from string to integer - provide error if it cannot be converted (es cat):
         [int(value) for value in values]
-        #2. validation of the 6 numbers given
+        #2. validation of the 6 numbers given:
         if len(values) != 6:
             raise ValueError(
                 f"Exactly 6 value required, you provided {len(values)}"
@@ -56,7 +59,22 @@ def validate_data(values):
         print(f"invalid data: {e}, please try again.\n")
         return False
     return True
-    
 
-# save data from previous function in a variable
+def update_sales_worksheet(data):
+    """
+    Update sales worksheet, add new row with the list data provided
+    """
+    print("Updating sales worksheet...\n")
+    #open the sales worksheet from google :
+    sales_worksheet = SHEET.worksheet("sales")
+    #add the entered value in the given sheet as a row:
+    sales_worksheet.append_row(data)
+    #visual feedback for the user:
+    print("Sales worksheet updated successfully.\n")
+
+# create a variable "data" for the user input:
 data = get_sales_data()
+# transform the data from strings to integer again:
+sales_data = [int(num) for num in data]
+# call the function for updating the sheet:
+update_sales_worksheet(sales_data)

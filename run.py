@@ -94,8 +94,11 @@ def update_worksheet(data, worksheet):
     this func will be shared for update all the sheets
     '''
     print(f"Updating {worksheet} worksheet...\n")
+    #create a variable that will take the data from the given worksheet
     worksheet_to_update = SHEET.worksheet(worksheet)
+    #append the given data to the correct worksheet
     worksheet_to_update.append_row(data)
+    
     print(f"{worksheet} worksheet updated successfully\n")
 
 

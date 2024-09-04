@@ -97,6 +97,18 @@ def calculate_surplus_data(sales_row):
         surplus_data.append(surplus)
     return surplus_data
 
+def update_surplus_worksheet(new_surplus_data):
+    """
+    this function will update the surplus sheet with the updated data
+    this data will be the difference between sales and stock data
+    """
+    print("update surplus worksheet with the new data...\n")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(new_surplus_data)
+    print("surplus data has been updated\n")
+    print(new_surplus_data)
+
+
 def main():
     '''main function that run all the program functions'''
     # create a variable "data" for the user input:
@@ -106,7 +118,7 @@ def main():
     # call the function for updating the sheet:
     update_sales_worksheet(sales_data)
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_surplus_worksheet(new_surplus_data)
 
 print("welcome to the love sandwiches data automation")
 #call the main function for call all of them 

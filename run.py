@@ -72,9 +72,15 @@ def update_sales_worksheet(data):
     #visual feedback for the user:
     print("Sales worksheet updated successfully.\n")
 
-# create a variable "data" for the user input:
-data = get_sales_data()
-# transform the data from strings to integer again:
-sales_data = [int(num) for num in data]
-# call the function for updating the sheet:
-update_sales_worksheet(sales_data)
+def main():
+    '''main function that run all the program functions'''
+    # create a variable "data" for the user input:
+    data = get_sales_data()
+    # transform the data from strings to integer again:
+    sales_data = [int(num) for num in data]
+    # call the function for updating the sheet:
+    update_sales_worksheet(sales_data)
+
+print("welcome to the love sandwiches data automation")
+#call the main function for call all of them 
+main()

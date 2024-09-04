@@ -25,17 +25,21 @@ def get_sales_data():
     """
     get sales input from user
     """
-    print("enter sales data from the last market")
-    print("the data entered should be six numbers separated by commas")
-    print("example: 10,20,30,40,50,60\n")
+    #create a while loop to restart the code if the data are not valid
+    while True:
+        print("enter sales data from the last market")
+        print("the data entered should be six numbers separated by commas")
+        print("example: 10,20,30,40,50,60\n")
 
-    #values are collected as strings
-    data_str = input("Enter your data here: ")
-    ##convert the string value into a list of values (still strings - need to be converted into integer)
-    #split methods break at the commas
-    sales_data = data_str.split(",")
-    #the function below is calling the validate data fucntion
-    validate_data(sales_data)
+        #values are collected as strings
+        data_str = input("Enter your data here: ")
+        ##convert the string value into a list of values (still strings - need to be converted into integer)
+        #split methods break at the commas
+        sales_data = data_str.split(",")
+        #the function below is calling the validate data fucntion
+        if validate_data(sales_data):
+            print("data is valid")
+            break
 
 def validate_data(values):
     """inside the try convert all string values in integer. raises valueerror if strings cannot be
@@ -50,7 +54,9 @@ def validate_data(values):
             )
     except ValueError as e:
         print(f"invalid data: {e}, please try again.\n")
+        return False
+    return True
     
 
-
-get_sales_data()
+# save data from previous function in a variable
+data = get_sales_data()

@@ -84,8 +84,18 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     #pprent will return data more readable as a list of lists (each list is a row)
     stock_row = stock[-1]
-    print(stock_row)
     #pprint(stock) show the data as list of lists - each list is a row in the sheet
+
+    #create an empty list to add the difference values between sales and stock:
+    surplus_data = []
+    #iterate between the two lists at the same times using zip method:
+    for stock, sales in zip(stock_row, sales_row):
+        #convert the stock value in integer before the operation:
+        #print(f"{stock}, {sales}") you can see both the list iterated
+        surplus = int(stock) - sales
+        #add the difference value to a 3rd list:
+        surplus_data.append(surplus)
+    return surplus_data
 
 def main():
     '''main function that run all the program functions'''
@@ -95,7 +105,8 @@ def main():
     sales_data = [int(num) for num in data]
     # call the function for updating the sheet:
     update_sales_worksheet(sales_data)
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
 
 print("welcome to the love sandwiches data automation")
 #call the main function for call all of them 

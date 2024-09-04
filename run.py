@@ -61,7 +61,7 @@ def validate_data(values):
         print(f"invalid data: {e}, please try again.\n")
         return False
     return True
-
+'''
 def update_sales_worksheet(data):
     """
     Update sales worksheet, add new row with the list data provided
@@ -73,6 +73,32 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     #visual feedback for the user:
     print("Sales worksheet updated successfully.\n")
+
+def update_surplus_worksheet(new_surplus_data):
+    """
+    this function will update the surplus sheet with the updated data
+    this data will be the difference between sales and stock data
+    """
+    print("update surplus worksheet with the new data...\n")
+    # open the surplus worksheet and assign it to a variable:
+    surplus_worksheet = SHEET.worksheet("surplus")
+    # append the surplus data calculated in the func above as a row
+    surplus_worksheet.append_row(new_surplus_data)
+    print("surplus data has been updated\n")
+    #print(new_surplus_data) you can see the list of value added 
+'''
+
+def update_worksheet(data, worksheet):
+    '''
+    update worksheet with the data provided (sales/surplus)
+    this func will be shared for update all the sheets
+    '''
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated successfully\n")
+
+
 
 def calculate_surplus_data(sales_row):
     '''
@@ -97,18 +123,6 @@ def calculate_surplus_data(sales_row):
         surplus_data.append(surplus)
     return surplus_data
 
-def update_surplus_worksheet(new_surplus_data):
-    """
-    this function will update the surplus sheet with the updated data
-    this data will be the difference between sales and stock data
-    """
-    print("update surplus worksheet with the new data...\n")
-    # open the surplus worksheet and assign it to a variable:
-    surplus_worksheet = SHEET.worksheet("surplus")
-    # append the surplus data calculated in the func above as a row
-    surplus_worksheet.append_row(new_surplus_data)
-    print("surplus data has been updated\n")
-    #print(new_surplus_data) you can see the list of value added 
 
 
 def main():
@@ -118,11 +132,11 @@ def main():
     # transform the data from strings to integer again:
     sales_data = [int(num) for num in data]
     # call the function for updating the sheet:
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     #call the fuction to calculate surplus data:
     new_surplus_data = calculate_surplus_data(sales_data)
     #call the function to update the sheet surplus
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 print("welcome to the love sandwiches data automation")
 

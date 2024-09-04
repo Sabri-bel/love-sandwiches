@@ -7,6 +7,8 @@
 import gspread
 #use creds.json for the autentication of the google clous
 from google.oauth2.service_account import Credentials
+#install the alternative print method:
+from pprint import pprint
 
 #set the scope
 #IAM configuration list the api that the program should access
@@ -72,6 +74,19 @@ def update_sales_worksheet(data):
     #visual feedback for the user:
     print("Sales worksheet updated successfully.\n")
 
+def calculate_surplus_data(sales_row):
+    '''
+    compare sales data with stock data and calculate the surplus for each item type
+    positive surplus indicates wastes
+    negative surplus indicated extra made after soldout
+    '''
+    print("calculate surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    #pprent will return data more readable as a list of lists (each list is a row)
+    stock_row = stock[-1]
+    print(stock_row)
+    #pprint(stock) show the data as list of lists - each list is a row in the sheet
+
 def main():
     '''main function that run all the program functions'''
     # create a variable "data" for the user input:
@@ -80,6 +95,7 @@ def main():
     sales_data = [int(num) for num in data]
     # call the function for updating the sheet:
     update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
 
 print("welcome to the love sandwiches data automation")
 #call the main function for call all of them 

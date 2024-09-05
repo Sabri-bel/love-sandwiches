@@ -133,13 +133,35 @@ def get_last_5_entries():
     """
     sales = SHEET.worksheet("sales")
     # collect data as column for all the 6 col (and not rows). number starts at 1 and not 0 as lists
+
     columns = []
     for ind in range(1,7):
         # collect all the value and append them to the new list:
         column = sales.col_values(ind)
         #select only the last 5 entries for each column:
         columns.append(column[-5:])
+
     return columns
+
+def calculate_stock_data(data):
+    """
+    calculate the average stock for each item type, adding 10 % 
+    """
+    print("Calculating stock data..\n")
+    #create a list that will contain the new stock datas:
+    new_stock_data = []
+
+    for column in data:
+        # convert string value in integer:
+        int_column = [int(num) for num in column]
+        # calculate the average of the last 5 entries for each column
+        average = sum(int_column) / len(int_column)
+        #multiply for 10percent
+        stock_num = average * 1.1
+        #append data to the list - rounded to a whole number (not float)
+        new_stock_data.append(round(stock_num))
+    return new_stock_data
+
 
 
 def main():
@@ -154,10 +176,12 @@ def main():
     new_surplus_data = calculate_surplus_data(sales_data)
     #call the function to update the sheet surplus
     update_worksheet(new_surplus_data, "surplus")
+    sales_columns = get_last_5_entries()
+    stock_data = calculate_stock_data(sales_columns)
+    update_worksheet(stock_data, "stock")
 
 print("welcome to the love sandwiches data automation")
 
 #call the main function for call all of them 
-#main()
+main()
 
-sales_columns = get_last_5_entries()

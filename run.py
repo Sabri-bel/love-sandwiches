@@ -8,7 +8,7 @@ import gspread
 #use creds.json for the autentication of the google clous
 from google.oauth2.service_account import Credentials
 #install the alternative print method:
-from pprint import pprint
+#from pprint import pprint
 
 #set the scope
 #IAM configuration list the api that the program should access
@@ -34,7 +34,7 @@ def get_sales_data():
         print("example: 10,20,30,40,50,60\n")
 
         #values are collected as strings:
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: \n")
         ##convert the string value into a list of values (still strings - need to be converted into integer)
         #split methods break at the commas
         sales_data = data_str.split(",")
